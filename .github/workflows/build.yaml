@@ -9,15 +9,15 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
-    # Анти-бот защита: сборка НЕ запустится, если её триггернул бот (например, dependabot, github-actions[bot] и др.)
     if: github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && contains(github.actor, '[bot]') == false
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
+    # Настраивает окружение разработчика Visual Studio (C++)
+    - name: Set up MSVC Developer Command Prompt
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Compile Pong Game
       run: |
