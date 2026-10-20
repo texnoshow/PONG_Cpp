@@ -15,9 +15,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Настраивает окружение разработчика Visual Studio (C++)
-    - name: Set up MSVC Developer Command Prompt
+    # Настраивает окружение MSVC строго под архитектуру x86
+    - name: Set up MSVC Developer Command Prompt (x86)
       uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x86
 
     - name: Compile Pong Game
       run: |
@@ -26,5 +28,5 @@ jobs:
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: pong-windows-exe
+        name: pong-windows-x86-exe
         path: pong_game.exe
