@@ -9,6 +9,8 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    # Анти-бот защита: сборка НЕ запустится, если её триггернул бот (например, dependabot, github-actions[bot] и др.)
+    if: github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && contains(github.actor, '[bot]') == false
 
     steps:
     - name: Checkout repository
@@ -22,7 +24,7 @@ jobs:
         cl.exe /EHsc main.cpp /Fe:pong_game.exe
 
     - name: Upload Build Artifact
-      uses: actions/artifacts@v4
+      uses: actions/upload-artifact@v4
       with:
         name: pong-windows-exe
         path: pong_game.exe
