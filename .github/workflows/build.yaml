@@ -1,0 +1,28 @@
+name: C++ Pong Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Compile Pong Game
+      run: |
+        cl.exe /EHsc main.cpp /Fe:pong_game.exe
+
+    - name: Upload Build Artifact
+      uses: actions/artifacts@v4
+      with:
+        name: pong-windows-exe
+        path: pong_game.exe
